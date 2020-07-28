@@ -122,3 +122,6 @@ export GOPATH=/root/go-workspace
 export GOROOT=/usr/local/go
 PATH=$PATH:$GOROOT/bin/:$GOPATH/bin
 
+#azure cli stuff
+export PATH=$PATH:/root/bin
+source '/root/lib/azure-cli/az.completion'
