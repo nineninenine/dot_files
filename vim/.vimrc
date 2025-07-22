@@ -1,4 +1,6 @@
-"Always wrap long lines:
-:set wrap
-"turn on numbers
-:set number
+set paste
+syntax on
+set number
+set cursorline
+set cursorcolumn
+set showcmd
