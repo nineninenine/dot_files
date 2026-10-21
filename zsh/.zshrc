@@ -1,3 +1,45 @@
+if [[ -o interactive ]]; then
+    printf '\n'
+    printf '╭─ 🖥️ SHELL LOADED ──────────────────────────────────\n'
+    printf '│    👤 User      : %s\n' "$USER"
+    printf '│    🖥️ Host      : %s\n' "$(hostname)"
+    printf '│    🕒 Started   : %s\n' "$(date '+%Y-%m-%d %H:%M:%S')"
+
+    printf '├─ ⚙️ SYSTEM ────────────────────────────────────────\n'
+    printf '│    🐧 OS        : %s\n' "$(. /etc/os-release && echo "$PRETTY_NAME")"
+    printf '│    🔧 Kernel    : %s\n' "$(uname -r)"
+    printf '│    ⏱️ Uptime    : %s\n' "$(uptime -p 2>/dev/null || echo unknown)"
+    printf '│    🧠 CPU       : %s cores\n' "$(nproc)"
+    printf '│    🧠 Memory    : %s (%s%% used)\n' \
+        "$(free -h | awk '/^Mem:/ {print $3 " / " $2}')" \
+        "$(free | awk '/^Mem:/ {printf "%.0f", $3/$2*100}')"
+    printf '│    💾 Disk      : %s / %s (%s used)\n' \
+        "$(df -h / | awk 'NR==2 {print $3}')" \
+        "$(df -h / | awk 'NR==2 {print $2}')" \
+        "$(df -h / | awk 'NR==2 {print $5}')"
+
+    printf '├─ 🌐 NETWORK ──────────────────────────────────────\n'
+
+    # Show each active global IPv4 interface on its own line.
+    # one tab characters separate the interface name and IP address.
+    ip -o -4 addr show up scope global 2>/dev/null |
+        awk '{
+            address = $4
+            sub(/\/.*/, "", address)
+            printf "│    📡 IPv4      : %s\t%s\n", $2, address
+        }'
+
+    printf '│    🚪 Gateway   : %s\n' \
+        "$(ip route show default 2>/dev/null | awk '{print $3; exit}')"
+
+    printf '╰───────────────────────────────────────────────────\n\n'
+fi
+
+
+
+
+
+
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
@@ -10,7 +52,7 @@ setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
 
-WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
+WORDCHARS='_-' # Don't consider certain characters part of the word
 
 # hide EOL sign ('%')
 PROMPT_EOL_MARK=""
@@ -249,7 +291,7 @@ alias l='ls -CF'
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
 fi
 
 # enable command-not-found if installed
@@ -258,8 +300,20 @@ if [ -f /etc/zsh_command_not_found ]; then
 fi
 
 
-# TMUX
+# TMUX. added 10/21/26
 if which tmux >/dev/null 2>&1; then
 #if not inside a tmux session, and if no session is started, start a new session
         test -z "$TMUX" && (tmux attach || tmux new-session)
 fi
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init --path)"
+fi
+
+
+# Then add the following to your .bashrc
+export GOROOT=/usr/lib/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
