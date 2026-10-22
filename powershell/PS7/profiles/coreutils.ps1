@@ -483,7 +483,7 @@ if ([Environment]::UserInteractive -and
 		Write-Host '  ⚠️  No local fixed drives found.' -ForegroundColor DarkGray
 	}
 
-	# ------------------------------------------------------------
+	<# ------------------------------------------------------------
 	# 📄 Profile
 	# ------------------------------------------------------------
 
@@ -496,6 +496,7 @@ if ([Environment]::UserInteractive -and
 	Write-Host ('  📍 Path             {0}' -f $PSCommandPath)
 	Write-Host ''
 	Write-Host ''
-
+#>
+Write-Host ''
 
 }	
