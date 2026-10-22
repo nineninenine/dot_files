@@ -405,29 +405,29 @@ if ([Environment]::UserInteractive -and
 	# ------------------------------------------------------------
 	# 📋 Session
 	# ------------------------------------------------------------
-
+	Write-Host ''
 	Write-Host ''
 	Write-Host '  📋 SESSION' -ForegroundColor blue
 	Write-Host '  --------------------------------------------------------' -ForegroundColor DarkGray
 
-	Write-Host ('  🖥️  Computer         {0}' -f $ComputerName)
-	Write-Host ('  👤 User             {0}' -f $UserName)
-	Write-Host ('  💠 PowerShell       {0} ({1})' -f $PowerShellVersion, $PowerShellEdition)
-	Write-Host ('  🪟 Host             {0}' -f $PowerShellHost)
+	Write-Host ('  🖥️  Computer          {0}' -f $ComputerName)
+	Write-Host ('  👤 User               {0}' -f $UserName)
+	Write-Host ('  💠 PowerShell         {0} ({1})' -f $PowerShellVersion, $PowerShellEdition)
+	Write-Host ('  🪟 Host               {0}' -f $PowerShellHost)
 
 	if ($IsAdministrator) {
-		Write-Host '  🛡️  Privileges       ADMINISTRATOR' -ForegroundColor Red
+		Write-Host '  🛡️  Privileges         ADMINISTRATOR' -ForegroundColor Red
 	} else {
-		Write-Host '  👤 Privileges       Standard user' -ForegroundColor Gray
+		Write-Host '  👤 Privileges         Standard user' -ForegroundColor Gray
 	}
 
-	Write-Host ('  🔐 Execution policy {0}' -f $ExecutionPolicy)
-	Write-Host ('  📂 Working directory {0}' -f $CurrentDirectory)
+	Write-Host ('  🔐 Execution policy   {0}' -f $ExecutionPolicy)
+	Write-Host ('  📂 Working directory  {0}' -f $CurrentDirectory)
 
 	# ------------------------------------------------------------
 	# 🧠 Physical memory
 	# ------------------------------------------------------------
-
+	Write-Host ''
 	Write-Host ''
 	Write-Host '  🧠 MEMORY' -ForegroundColor blue
 	Write-Host '  --------------------------------------------------------' -ForegroundColor DarkGray
@@ -439,7 +439,7 @@ if ([Environment]::UserInteractive -and
 	# ------------------------------------------------------------
 	# 💾 Drive space
 	# ------------------------------------------------------------
-
+	Write-Host ''
 	Write-Host ''
 	Write-Host '  💾 STORAGE' -ForegroundColor blue
 	Write-Host '  --------------------------------------------------------' -ForegroundColor DarkGray
@@ -497,6 +497,7 @@ if ([Environment]::UserInteractive -and
 	Write-Host ''
 	Write-Host ''
 #>
-Write-Host ''
-
+	Write-Host ""
+	Write-Host '  --------------------------------------------------------' -ForegroundColor DarkGray
+	Write-Host ""
 }	
