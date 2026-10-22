@@ -1,4 +1,4 @@
-﻿#FOR PS5. Install at $PROFILE which is usually C:\Users\<username>\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+﻿#FOR PS5. Install at PS5 $PROFILE which is usually C:\Users\<username>\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
 
 
 Write-Host -ForegroundColor blue "[+] Default PowerShell profile loaded."
