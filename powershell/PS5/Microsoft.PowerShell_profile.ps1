@@ -12,7 +12,19 @@ if ([Environment]::UserInteractive -and
 	Write-Host "[+] Full path        : $($PSCommandPath)" -ForegroundColor Blue
 	Write-Host ""
 
+	Write-Host -ForegroundColor blue "`n[+] Testing for shell conflicts:`n"
+	$Commands = @(
+    'ls', 'cat', 'cp', 'date', 'echo',
+    'mkdir', 'mv', 'pwd', 'rm', 'rmdir',
+    'sleep', 'sort', 'tee', 'uptime'
+	)
 
+	$Results = foreach ($Command in $Commands) {
+    Get-Command $Command -ListImported |
+        Select-Object commandtype, Name, ResolvedCommand, path
+}
+
+$Results | Format-Table -AutoSize | Out-Host
 
 	# ============================================================
 	# ⚙️   POWERSHELL ENVIRONMENT

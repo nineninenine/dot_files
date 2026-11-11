@@ -264,20 +264,50 @@ if ([Environment]::UserInteractive -and
 	Write-Host -ForegroundColor blue "`n[+] Testing for shell conflicts:`n"
 	#confirm unix commands are loaded
 	ls --version
+	
 	cat --version
+	
 	cp --version
+	
 	date --version
+	
 	echo --version
+	
 	ls --version
+	
 	mkdir --version
+	
 	mv --version
+	
 	pwd --version
+	
 	rm --version
+	
 	rmdir --version
+	
 	sleep --version
+	
 	sort --version
+	
 	tee -V
+	
 	uptime --version
+
+	$Commands = @(
+    'ls', 'cat', 'cp', 'date', 'echo',
+    'mkdir', 'mv', 'pwd', 'rm', 'rmdir',
+    'sleep', 'sort', 'tee', 'uptime'
+	)
+
+	$Results = foreach ($Command in $Commands) {
+    Get-Command $Command -ListImported |
+        Select-Object commandtype, Name, path
+}
+
+$Results | Format-Table -AutoSize | Out-Host
+
+
+	
 	Write-Host ''
 
 	# ============================================================
