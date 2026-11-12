@@ -293,18 +293,8 @@ if ([Environment]::UserInteractive -and
 	
 	uptime --version
 
-	$Commands = @(
-    'ls', 'cat', 'cp', 'date', 'echo',
-    'mkdir', 'mv', 'pwd', 'rm', 'rmdir',
-    'sleep', 'sort', 'tee', 'uptime'
-	)
 
-	$Results = foreach ($Command in $Commands) {
-    Get-Command $Command -ListImported |
-        Select-Object commandtype, Name, path
-}
 
-$Results | Format-Table -AutoSize | Out-Host
 
 
 	
@@ -530,4 +520,21 @@ $Results | Format-Table -AutoSize | Out-Host
 	Write-Host ""
 	Write-Host '  --------------------------------------------------------' -ForegroundColor DarkGray
 	Write-Host ""
+	
+	
+		Write-Host -ForegroundColor blue "`n[+] The following Linux utilities are available in `$PATH"
+
+	$Commands = @(
+'arch','b2sum','base32','base64','basename','basenc','cat','cksum','comm','cp','csplit','cut', 'date','df','dirname','du','echo','env','expr','factor','false','find','fmt','fold','grep','head','hostname','join','link','ln','ls','md5sum','mkdir','mktemp','mv','nl','nproc','numfmt','od','pathchk','pr','printenv','printf','ptx','pwd','readlink','realpath','rm','rmdir','seq','sha1sum','sha224sum','sha256sum','sha384sum','sha512sum','shuf','sleep','sort','split','stat','sum','tac','tail','tee','test','touch','tr','true','truncate','tsort','unexpand','uniq','unlink','uptime','wc','xargs','yes'
+	)
+
+	$Results = foreach ($Command in $Commands) {
+    Get-Command $Command -ListImported |
+        Select-Object @{Name='Name'; Expression={ ([string]$_.Name).Split('.')[0] }}, Path
+}
+
+$Results | Format-Table -AutoSize | Out-Host
+
+Write-Host "`n[+] Found $($Results.Count) utilities." -ForegroundColor Green
+	
 }	

@@ -23,14 +23,14 @@ if ([Environment]::UserInteractive -and
 
 	Write-Host -ForegroundColor blue "`n[+] Testing for shell conflicts:`n"
 	$Commands = @(
-    'ls', 'cat', 'cp', 'date', 'echo',
+    'ls', 'cat', 'cp', 'echo',
     'mkdir', 'mv', 'pwd', 'rm', 'rmdir',
-    'sleep', 'sort', 'tee', 'uptime'
+    'sleep', 'sort', 'tee'
 	)
 
 	$Results = foreach ($Command in $Commands) {
     Get-Command $Command -ListImported |
-        Select-Object commandtype, Name, ResolvedCommand, path
+        Select-Object commandtype, Name, ResolvedCommand
 }
 
 $Results | Format-Table -AutoSize | Out-Host
